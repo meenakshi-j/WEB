@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('bank.jpg'); /* Add your background image path here */
+            background-size: cover; /* Cover the entire page */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-position: center; /* Center the image */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+            margin: 0; /* Ensure no extra margins */
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Add slight transparency to ensure readability */
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 1rem;
+        }
+
+        /* Back Button Style */
+        .back-button {
+            background-color: #2196F3; /* Blue color */
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: red; /* Darker blue on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Payment Details</h2>
+        
+        <form id="paymentForm">
+            <label for="bankName">Bank Name</label>
+            <select id="bankName" name="bankName" required>
+                <option value="">Select Bank</option>
+                <option value="SBI">SBI</option>
+                <option value="HDFC">HDFC</option>
+                <option value="ICICI">ICICI</option>
+                <option value="AXIS">AXIS</option>
+                <option value="IDBI">IDBI</option>
+            </select>
+            <span class="error" id="bankNameError"></span>
+
+            <label for="accountNumber">Account Number</label>
+            <input type="text" id="accountNumber" name="accountNumber" placeholder="Enter Account Number" required pattern="\d{10,18}">
+            <span class="error" id="accountNumberError"></span>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required minlength="6">
+            <span class="error" id="passwordError"></span>
+
+            <!-- Hidden input to carry payment method information -->
+            <input type="hidden" id="paymentMethod" name="paymentMethod" value="Net Banking">
+
+            <button type="submit">Pay ₹5000</button>
+        </form>
+
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.location.href='payment.html'">Back</button>
+    </div>
+
+    <script>
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            // Clear previous errors
+            document.getElementById('bankNameError').textContent = '';
+            document.getElementById('accountNumberError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+
+            // Validate Bank Name
+            const bankName = document.getElementById('bankName').value;
+            if (!bankName) {
+                document.getElementById('bankNameError').textContent = 'Please select a bank.';
+                isValid = false;
+            }
+
+            // Validate Account Number
+            const accountNumber = document.getElementById('accountNumber').value;
+            if (!accountNumber.match(/^\d{10,18}$/)) {
+                document.getElementById('accountNumberError').textContent = 'Account Number must be between 10 to 18 digits.';
+                isValid = false;
+            }
+
+            // Validate Password
+            const password = document.getElementById('password').value;
+            if (password.length < 6) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters long.';
+                isValid = false;
+            }
+
+            if (isValid) {
+                // Redirect to payment-success.html with payment method as a query parameter
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                window.location.href = `paymentsuccess.html?method=${encodeURIComponent(paymentMethod)}`;
+            }
+        });
+    </script>
+</body>
+</html>
