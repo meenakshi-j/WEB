@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Service Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('service.jpg'); /* Add your background image path here */
+            background-size: cover; /* Ensure the image covers the entire viewport */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: center; /* Center the image */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Add slight transparency for readability */
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        label {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Success message styling */
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            color: #4CAF50;
+            font-size: 1.2rem;
+        }
+
+        /* Go to Main button styling */
+        .go-to-main {
+            display: none;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .go-to-main:hover {
+            background-color: #0056b3;
+        }
+
+        /* Back button styling */
+        .back-button {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container" id="formContainer">
+    <h1>Room Service Request</h1>
+
+    <form id="roomServiceForm" onsubmit="handleFormSubmit(event)">
+        <!-- User Name -->
+        <label for="userName">Name</label>
+        <input type="text" id="userName" name="userName" placeholder="Enter your name" required>
+
+        <!-- Room Number -->
+        <label for="roomNumber">Room Number</label>
+        <input type="text" id="roomNumber" name="roomNumber" placeholder="Enter your room number" required>
+
+        <!-- Issue Description -->
+        <label for="issueDescription">Issue Description</label>
+        <textarea id="issueDescription" name="issueDescription" placeholder="Describe the issue or problem" required></textarea>
+
+        <!-- Submit Button -->
+        <div class="button-container">
+            <button type="submit">Submit Request</button>
+        </div>
+    </form>
+
+    <!-- Back button -->
+    <a href="main.html" class="back-button">Back</a>
+
+    <!-- Success message -->
+    <div class="success-message" id="successMessage">
+        Your response has been recorded. We will try to sort it out as soon as possible.
+    </div>
+
+    <!-- Go to Main button -->
+    <a href="main.html" class="go-to-main" id="goToMainButton">Go to Main</a>
+
+</div>
+
+<script>
+    function handleFormSubmit(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Get form data
+        const userName = document.getElementById('userName').value;
+        const roomNumber = document.getElementById('roomNumber').value;
+        const issueDescription = document.getElementById('issueDescription').value;
+
+        // Hide the form
+        document.getElementById('roomServiceForm').style.display = 'none';
+
+        // Show the success message and "Go to Main" button
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('goToMainButton').style.display = 'inline-block';
+    }
+</script>
+
+</body>
+</html>
