@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Food Booking Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('food.jpg'); /* Add your background image path here */
+            background-size: cover; /* Ensure the image covers the entire viewport */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: center; /* Center the image */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .booking-form-container, .success-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Add slight transparency for readability */
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .food-category {
+            margin-bottom: 20px;
+        }
+
+        .food-category h3 {
+            margin-bottom: 10px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .food-category-content {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .food-category-content div {
+            margin-bottom: 10px;
+        }
+
+        .food-category-content input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .food-category-content label {
+            font-weight: normal; /* Remove bold styling for items */
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            background-color: #008CBA;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+            font-size: 1rem;
+            margin-right: 2%;
+        }
+
+        .back-button:hover {
+            background-color: #007bb5;
+        }
+
+        .success-container {
+            display: none; /* Initially hidden */
+        }
+
+        .done-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .done-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="booking-form-container">
+    <h1>Food Booking Form</h1>
+
+    <form id="foodBookingForm" onsubmit="handleFormSubmit(event)">
+        <!-- Number of People -->
+        <label for="peopleCount">Number of People</label>
+        <input type="number" id="peopleCount" name="peopleCount" min="1" placeholder="Enter number of people" required>
+
+        <!-- Meal Time -->
+        <label for="mealTime">Meal Time</label>
+        <select id="mealTime" name="mealTime" required>
+            <option value="" disabled selected>Select meal time</option>
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+        </select>
+
+        <!-- Starters -->
+        <div class="food-category" onclick="toggleCategory('starters')">
+            <h3>Starters</h3>
+            <div class="food-category-content" id="starters">
+                <div><input type="checkbox" id="soup" name="starters" value="soup"><label for="soup">Soup - $5</label></div>
+                <div><input type="checkbox" id="springrolls" name="starters" value="springrolls"><label for="springrolls">Spring Rolls - $6</label></div>
+                <div><input type="checkbox" id="paneertikka" name="starters" value="paneertikka"><label for="paneertikka">Paneer Tikka - $8</label></div>
+                <div><input type="checkbox" id="fishfingers" name="starters" value="fishfingers"><label for="fishfingers">Fish Fingers - $7</label></div>
+                <div><input type="checkbox" id="chickentikka" name="starters" value="chickentikka"><label for="chickentikka">Chicken Tikka - $9</label></div>
+                <div><input type="checkbox" id="cheeseballs" name="starters" value="cheeseballs"><label for="cheeseballs">Cheese Balls - $5</label></div>
+                <div><input type="checkbox" id="gobi65" name="starters" value="gobi65"><label for="gobi65">Gobi 65 - $6</label></div>
+                <div><input type="checkbox" id="prawncrunch" name="starters" value="prawncrunch"><label for="prawncrunch">Prawn Crunch - $10</label></div>
+                <div><input type="checkbox" id="vegcutlet" name="starters" value="vegcutlet"><label for="vegcutlet">Vegetable Cutlet - $7</label></div>
+                <div><input type="checkbox" id="mozzarellasticks" name="starters" value="mozzarellasticks"><label for="mozzarellasticks">Mozzarella Sticks - $8</label></div>
+            </div>
+        </div>
+
+        <!-- Vegetarian Curries -->
+        <div class="food-category" onclick="toggleCategory('vegcurries')">
+            <h3>Vegetarian Curries</h3>
+            <div class="food-category-content" id="vegcurries">
+                <div><input type="checkbox" id="paneerbuttermasala" name="vegcurries" value="paneerbuttermasala"><label for="paneerbuttermasala">Paneer Butter Masala - $10</label></div>
+                <div><input type="checkbox" id="dalmakhani" name="vegcurries" value="dalmakhani"><label for="dalmakhani">Dal Makhani - $8</label></div>
+                <div><input type="checkbox" id="aloogobi" name="vegcurries" value="aloogobi"><label for="aloogobi">Aloo Gobi - $7</label></div>
+                <div><input type="checkbox" id="chana" name="vegcurries" value="chana"><label for="chana">Chana Masala - $8</label></div>
+                <div><input type="checkbox" id="palakpaneer" name="vegcurries" value="palakpaneer"><label for="palakpaneer">Palak Paneer - $9</label></div>
+                <div><input type="checkbox" id="mixveg" name="vegcurries" value="mixveg"><label for="mixveg">Mixed Vegetable Curry - $8</label></div>
+                <div><input type="checkbox" id="mushroom" name="vegcurries" value="mushroom"><label for="mushroom">Mushroom Masala - $9</label></div>
+                <div><input type="checkbox" id="malai" name="vegcurries" value="malai"><label for="malai">Malai Kofta - $10</label></div>
+                <div><input type="checkbox" id="bhindimasala" name="vegcurries" value="bhindimasala"><label for="bhindimasala">Bhindi Masala - $8</label></div>
+                <div><input type="checkbox" id="navratan" name="vegcurries" value="navratan"><label for="navratan">Navratan Korma - $10</label></div>
+            </div>
+        </div>
+
+        <!-- Non-Vegetarian Curries -->
+        <div class="food-category" onclick="toggleCategory('nonvegcurries')">
+            <h3>Non-Vegetarian Curries</h3>
+            <div class="food-category-content" id="nonvegcurries">
+                <div><input type="checkbox" id="butterchicken" name="nonvegcurries" value="butterchicken"><label for="butterchicken">Butter Chicken - $12</label></div>
+                <div><input type="checkbox" id="chickencurry" name="nonvegcurries" value="chickencurry"><label for="chickencurry">Chicken Curry - $11</label></div>
+                <div><input type="checkbox" id="muttoncurry" name="nonvegcurries" value="muttoncurry"><label for="muttoncurry">Mutton Curry - $15</label></div>
+                <div><input type="checkbox" id="fishcurry" name="nonvegcurries" value="fishcurry"><label for="fishcurry">Fish Curry - $13</label></div>
+                <div><input type="checkbox" id="prawnmasala" name="nonvegcurries" value="prawnmasala"><label for="prawnmasala">Prawn Masala - $14</label></div>
+                <div><input type="checkbox" id="kadai" name="nonvegcurries" value="kadai"><label for="kadai">Kadai Chicken - $12</label></div>
+                <div><input type="checkbox" id="lambroganjosh" name="nonvegcurries" value="lambroganjosh"><label for="lambroganjosh">Lamb Rogan Josh - $16</label></div>
+                <div><input type="checkbox" id="chickenkorma" name="nonvegcurries" value="chickenkorma"><label for="chickenkorma">Chicken Korma - $13</label></div>
+                <div><input type="checkbox" id="muttonkeema" name="nonvegcurries" value="muttonkeema"><label for="muttonkeema">Mutton Keema - $14</label></div>
+                <div><input type="checkbox" id="goanfishcurry" name="nonvegcurries" value="goanfishcurry"><label for="goanfishcurry">Goan Fish Curry - $15</label></div>
+            </div>
+        </div>
+
+        <!-- Desserts -->
+        <div class="food-category" onclick="toggleCategory('desserts')">
+            <h3>Desserts</h3>
+            <div class="food-category-content" id="desserts">
+                <div><input type="checkbox" id="gulabjamun" name="desserts" value="gulabjamun"><label for="gulabjamun">Gulab Jamun - $4</label></div>
+                <div><input type="checkbox" id="jalebi" name="desserts" value="jalebi"><label for="jalebi">Jalebi - $4</label></div>
+                <div><input type="checkbox" id="rasgulla" name="desserts" value="rasgulla"><label for="rasgulla">Rasgulla - $4</label></div>
+                <div><input type="checkbox" id="barfi" name="desserts" value="barfi"><label for="barfi">Barfi - $5</label></div>
+                <div><input type="checkbox" id="kheer" name="desserts" value="kheer"><label for="kheer">Kheer - $4</label></div>
+                <div><input type="checkbox" id="peda" name="desserts" value="peda"><label for="peda">Peda - $5</label></div>
+                <div><input type="checkbox" id="icecream" name="desserts" value="icecream"><label for="icecream">Ice Cream - $4</label></div>
+                <div><input type="checkbox" id="custard" name="desserts" value="custard"><label for="custard">Custard - $4</label></div>
+                <div><input type="checkbox" id="fruitcake" name="desserts" value="fruitcake"><label for="fruitcake">Fruit Cake - $6</label></div>
+                <div><input type="checkbox" id="cheesecake" name="desserts" value="cheesecake"><label for="cheesecake">Cheesecake - $6</label></div>
+            </div>
+        </div>
+        <!-- Buttons -->
+        <button type="submit">Submit</button>
+        <button type="button" class="back-button" onclick="window.location.href='main.html'">Back</button>
+    </form>
+</div>
+
+<div class="success-container" id="successMessage">
+    <h2>Food Booked Successfully</h2>
+    <a href="main.html" class="done-button">Go to Main Page</a>
+</div>
+
+<script>
+    function toggleCategory(categoryId) {
+        var content = document.getElementById(categoryId);
+        if (content.style.display === "none" || content.style.display === "") {
+            content.style.display = "block";
+        } else {
+            content.style.display = "none";
+        }
+    }
+
+    function handleFormSubmit(event) {
+        event.preventDefault();
+        document.querySelector('.booking-form-container').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
