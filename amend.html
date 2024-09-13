@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amend Booking Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('booking.jpg'); /* Replace with your image path */
+            background-size: cover; /* Ensure the image covers the entire viewport */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: center; /* Center the image */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .booking-form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Add slight transparency for readability */
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button, .done-button, .back-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        button:hover, .done-button:hover, .back-button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .success-container {
+            display: none; /* Initially hidden */
+        }
+
+        .success-container h2 {
+            color: #4CAF50;
+        }
+
+        .done-button {
+            background-color: #007bff;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            text-align: center;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .done-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Booking Form Container -->
+<div class="booking-form-container" id="bookingFormContainer">
+    <h1>Amend Booking Form</h1>
+
+    <form id="amendBookingForm">
+        <!-- Booking Reference -->
+        <label for="bookingReference">Booking Reference</label>
+        <input type="text" id="bookingReference" name="bookingReference" placeholder="Enter your booking reference" required>
+
+        <!-- Current Check-in Date -->
+        <label for="currentCheckinDate">Current Check-in Date</label>
+        <input type="date" id="currentCheckinDate" name="currentCheckinDate" required>
+
+        <!-- New Check-in Date -->
+        <label for="newCheckinDate">New Check-in Date</label>
+        <input type="date" id="newCheckinDate" name="newCheckinDate" required>
+
+        <!-- Current Check-out Date -->
+        <label for="currentCheckoutDate">Current Check-out Date</label>
+        <input type="date" id="currentCheckoutDate" name="currentCheckoutDate" required>
+
+        <!-- New Check-out Date -->
+        <label for="newCheckoutDate">New Check-out Date</label>
+        <input type="date" id="newCheckoutDate" name="newCheckoutDate" required>
+
+        <!-- Number of Rooms -->
+        <label for="numberOfRooms">Number of Rooms</label>
+        <input type="number" id="numberOfRooms" name="numberOfRooms" min="1" placeholder="Enter number of rooms" required>
+
+        <!-- Room Type -->
+        <label for="roomType">Room Type</label>
+        <select id="roomType" name="roomType" required>
+            <option value="" disabled selected>Select room type</option>
+            <option value="single">Single</option>
+            <option value="double">Double</option>
+            <option value="suite">Suite</option>
+        </select>
+
+        <!-- Special Requests -->
+        <label for="specialRequests">Special Requests</label>
+        <textarea id="specialRequests" name="specialRequests" rows="4" placeholder="Enter any special requests"></textarea>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Amendment</button>
+        <!-- Back Button -->
+        <a href="main.html" class="back-button">Back</a>
+    </form>
+</div>
+
+<!-- Success Message Container -->
+<div class="success-container" id="successMessage">
+    <h2>Amendment Submitted Successfully</h2>
+    <a href="main.html" class="done-button">Done</a>
+</div>
+
+<script>
+    document.getElementById('amendBookingForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Hide the form container
+        document.getElementById('bookingFormContainer').style.display = 'none';
+
+        // Show the success message container
+        document.getElementById('successMessage').style.display = 'block';
+    });
+</script>
+
+</body>
+</html>
