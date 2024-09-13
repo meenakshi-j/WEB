@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking Form</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('booking.jpg'); /* Add your background image path here */
+            background-size: cover; /* Cover the entire page */
+            background-repeat: no-repeat; /* Prevent repeating */
+            background-position: center; /* Center the image */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: transparency;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            background-color: #f44336; /* Red color for back button */
+            margin-top: 1rem;
+        }
+
+        .back-button:hover {
+            background-color: #e53935; /* Darker red color */
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Room Booking Form</h2>
+        
+        <!-- Display Selected Hotel Information -->
+        <p><strong>Hotel Name:</strong> <span id="hotelName"></span></p>
+        <p><strong>Cost:</strong> <span id="hotelCost"></span></p>
+
+        <form id="bookingForm">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" required>
+
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <span id="emailError" class="error"></span>
+
+            <label for="contact">Contact Number</label>
+            <input type="tel" id="contact" name="contact" required>
+            <span id="contactError" class="error"></span>
+
+            <label for="roomType">Type of Room</label>
+            <select id="roomType" name="roomType" required>
+                <option value="single">Single</option>
+                <option value="double">Double</option>
+                <option value="suite">Suite</option>
+            </select>
+
+            <label for="arrivalDate">Arrival Date</label>
+            <input type="date" id="arrivalDate" name="arrivalDate" required>
+
+            <label for="nights">Number of Nights</label>
+            <input type="number" id="nights" name="nights" required min="1">
+
+            <label for="guests">Number of Guests</label>
+            <input type="number" id="guests" name="guests" required min="1">
+
+            <button type="submit">Submit</button>
+            <button type="button" class="back-button" onclick="window.location.href='hotel.html';">Back</button>
+        </form>
+    </div>
+
+    <script>
+        // Function to get query parameters from URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get hotelName and hotelCost from the query parameters
+        const hotelName = getQueryParam('hotelName');
+        const hotelCost = getQueryParam('hotelCost');
+
+        // Display hotel name and cost on the page
+        document.getElementById('hotelName').textContent = hotelName;
+        document.getElementById('hotelCost').textContent = hotelCost;
+
+        // Handle form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Collect form data
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const contact = document.getElementById('contact').value;
+            const roomType = document.getElementById('roomType').value;
+            const arrivalDate = document.getElementById('arrivalDate').value;
+            const nights = document.getElementById('nights').value;
+            const guests = document.getElementById('guests').value;
+
+            // Validate email (must end with @gmail.com)
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            const isEmailValid = emailPattern.test(email);
+            const emailErrorElement = document.getElementById('emailError');
+            if (!isEmailValid) {
+                emailErrorElement.textContent = 'Email must end with @gmail.com';
+                return;
+            } else {
+                emailErrorElement.textContent = '';
+            }
+
+            // Validate contact number (must start with 6, 7, 8, or 9 and be exactly 10 digits)
+            const contactPattern = /^[6-9]\d{9}$/;
+            const isContactValid = contactPattern.test(contact);
+            const contactErrorElement = document.getElementById('contactError');
+            if (!isContactValid) {
+                contactErrorElement.textContent = 'Contact number must start with 6, 7, 8, or 9 and be exactly 10 digits';
+                return;
+            } else {
+                contactErrorElement.textContent = '';
+            }
+
+            // Construct the query string
+            const queryString = `firstName=${encodeURIComponent(firstName)}&lastName=${encodeURIComponent(lastName)}&email=${encodeURIComponent(email)}&contact=${encodeURIComponent(contact)}&roomType=${encodeURIComponent(roomType)}&arrivalDate=${encodeURIComponent(arrivalDate)}&nights=${encodeURIComponent(nights)}&guests=${encodeURIComponent(guests)}&hotelName=${encodeURIComponent(hotelName)}&hotelCost=${encodeURIComponent(hotelCost)}`;
+
+            // Redirect to payment.html with query parameters
+            window.location.href = `payment.html?${queryString}`;
+        });
+    </script>
+</body>
+</html>
