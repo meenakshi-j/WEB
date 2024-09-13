@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Event Booking Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('event.jpg'); /* Add your background image path here */
+            background-size: cover; /* Ensure the image covers the entire viewport */
+            background-repeat: no-repeat; /* Prevent the image from repeating */
+            background-position: center; /* Center the image */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .booking-form-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Add slight transparency for readability */
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .form-row > div {
+            flex: 1;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            background-color: #007BFF;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #4CAF50;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+        }
+
+        .done-button {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .done-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="booking-form-container">
+    <h1>Event Booking Form</h1>
+
+    <div class="success-message" id="successMessage">The event has been booked successfully!</div>
+    <button class="done-button" id="doneButton" onclick="redirectToMain()">Done</button>
+
+    <form id="eventBookingForm" onsubmit="handleFormSubmit(event)">
+        <!-- Event Type -->
+        <label for="eventType">Event Type</label>
+        <select id="eventType" name="eventType" required>
+            <option value="" disabled selected>Select event type</option>
+            <option value="wedding">Wedding</option>
+            <option value="conference">Conference</option>
+            <option value="birthday">Birthday Party</option>
+            <option value="corporate">Corporate Event</option>
+            <option value="others">Others</option>
+        </select>
+
+        <!-- Type of Hall -->
+        <label for="hallType">Hall Type</label>
+        <select id="hallType" name="hallType" required>
+            <option value="" disabled selected>Select hall type</option>
+            <option value="banquet">Banquet Hall</option>
+            <option value="conference">Conference Hall</option>
+            <option value="ballroom">Ballroom</option>
+            <option value="outdoor">Outdoor Event Space</option>
+        </select>
+
+        <!-- Date of Event -->
+        <label for="eventDate">Event Date</label>
+        <input type="date" id="eventDate" name="eventDate" required>
+
+        <!-- Time of Event -->
+        <label for="eventTime">Event Time</label>
+        <input type="time" id="eventTime" name="eventTime" required>
+
+        <!-- Number of Guests -->
+        <label for="guestCount">Number of Guests</label>
+        <input type="number" id="guestCount" name="guestCount" min="1" placeholder="Enter number of guests" required>
+
+        <!-- Contact Information -->
+        <div class="form-row">
+            <div>
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+            </div>
+            <div>
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+            </div>
+        </div>
+
+        <!-- Phone Number -->
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+        <!-- Email Address -->
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+
+        <!-- Additional Services (Checkboxes) -->
+        <label>Additional Services</label>
+        <div class="form-row">
+            <div>
+                <input type="checkbox" id="catering" name="services" value="catering">
+                <label for="catering">Catering</label>
+            </div>
+            <div>
+                <input type="checkbox" id="audio" name="services" value="audio">
+                <label for="audio">Audio/Visual Equipment</label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <input type="checkbox" id="decoration" name="services" value="decoration">
+                <label for="decoration">Decorations</label>
+            </div>
+            <div>
+                <input type="checkbox" id="photography" name="services" value="photography">
+                <label for="photography">Photography</label>
+            </div>
+        </div>
+
+        <!-- Additional Comments -->
+        <label for="comments">Additional Comments</label>
+        <textarea id="comments" name="comments" rows="4" placeholder="Enter any additional details"></textarea>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Booking</button>
+    </form>
+
+    <!-- Back Button -->
+    <button class="back-button" onclick="goBack()">Back</button>
+</div>
+
+<script>
+    function handleFormSubmit(event) {
+        event.preventDefault(); // Prevent the form from submitting the traditional way
+
+        // Validate email
+        const emailInput = document.getElementById('email');
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        if (!emailPattern.test(emailInput.value)) {
+            alert('Please enter a valid email ending with @gmail.com.');
+            return;
+        }
+
+        // Validate phone number
+        const phoneInput = document.getElementById('phone');
+        const phonePattern = /^[6-9][0-9]{9}$/;
+        if (!phonePattern.test(phoneInput.value)) {
+            alert('Please enter a valid phone number starting with 6, 7, 8, or 9 and exactly 10 digits.');
+            return;
+        }
+
+        // Show the success message and done button
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('doneButton').style.display = 'block';
+
+        // Hide the form
+        document.getElementById('eventBookingForm').style.display = 'none';
+    }
+
+    function redirectToMain() {
+        window.location.href = 'main.html';
+    }
+
+    function goBack() {
+        window.location.href = 'main.html'; // Redirect to main.html when "Back" is clicked
+    }
+</script>
+
+</body>
+</html>
